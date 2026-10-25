@@ -7,7 +7,7 @@
 **task-board** — タスク管理ボードアプリケーション。
 
 - 技術スタック: React 18 + Vite 5（JavaScript）
-- 状態はメモリ上（`useState`）のみで保持しており、リロードするとタスクは消える
+- タスクは localStorage（キー: `task-board.tasks`）に保存され、リロード後も保持される
 
 ### コマンド
 
