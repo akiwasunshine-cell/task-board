@@ -6,8 +6,28 @@
 
 **task-board** — タスク管理ボードアプリケーション。
 
-- 技術スタック: React 18 + Vite 5（JavaScript）
 - タスクは localStorage（キー: `task-board.tasks`）に保存され、リロード後も保持される
+
+## デプロイ先
+
+https://akiwasunshine-cell.github.io/task-board/
+
+- `main` へのプッシュで `.github/workflows/deploy.yml` が実行され、GitHub Pages に自動デプロイされる
+- `vite.config.js` の `base` は `/task-board/`。リポジトリ名を変えた場合はここも合わせて変更する
+- このため開発サーバーのURLも http://localhost:5173/task-board/ になる
+
+## 技術スタック
+
+| 用途 | 使用技術 |
+| --- | --- |
+| UI ライブラリ | React 18.3（関数コンポーネント + Hooks） |
+| ビルドツール / 開発サーバー | Vite 5.4（`@vitejs/plugin-react`） |
+| 言語 | JavaScript（JSX）。TypeScript は未導入 |
+| スタイル | 素の CSS（`src/App.css`）。CSS フレームワークは未使用 |
+| データ保存 | ブラウザの localStorage（バックエンドなし） |
+| ホスティング | GitHub Pages（GitHub Actions でデプロイ、Node 22） |
+
+- テストフレームワークと Linter / Formatter はまだ導入していない
 
 ### コマンド
 
@@ -21,12 +41,22 @@ npm run build    # 本番ビルド（dist/ に出力）
 
 - `src/App.jsx` — タスクの追加・完了切り替え・削除を行うメインコンポーネント
 - `src/App.css` — スタイル（完了済みタスクは `.task.done` でグレー表示）
+- `src/main.jsx` — エントリーポイント（`App` を `#root` に描画）
 
-### デプロイ（GitHub Pages）
+## コンポーネントの命名規約
 
-- `main` へのプッシュで `.github/workflows/deploy.yml` が実行され、GitHub Pages に自動デプロイされる
-- 公開URL: https://akiwasunshine-cell.github.io/task-board/
-- `vite.config.js` の `base` は `/task-board/`。リポジトリ名を変えた場合はここも合わせて変更する
+現在のコード（`src/App.jsx`）の書き方に合わせる。
+
+- **コンポーネント名**: PascalCase（例: `App`、`TaskItem`、`AddTaskForm`）
+- **ファイル名**: コンポーネント名と同じ PascalCase + `.jsx`（例: `TaskItem.jsx`）。1ファイル1コンポーネントとし、`export default` で公開する
+- **定義の書き方**: `function App() { ... }` のように関数宣言で書く（アロー関数のコンポーネントにしない）
+- **イベント処理の関数**: 「動詞 + 名詞」の camelCase（例: `addTask`、`toggleTask`、`deleteTask`）
+- **イベントを受け取る props**: `on` + 動詞 + 名詞（例: `onToggleTask`、`onDeleteTask`）
+- **ヘルパー関数**: camelCase（例: `loadTasks`）。コンポーネントの外に置く
+- **定数**: UPPER_SNAKE_CASE（例: `STORAGE_KEY`）
+- **state**: `[値, set値]` の組で命名する（例: `[tasks, setTasks]`、`[text, setText]`）
+- **CSS クラス名**: kebab-case（例: `add-form`、`task-list`）。状態は修飾クラスで表す（例: `task done`）
+- **コンポーネントの置き場所**: 新しく分割するコンポーネントは `src/components/` に置く
 
 ## Git 運用ルール
 
