@@ -22,6 +22,12 @@ npm run build    # 本番ビルド（dist/ に出力）
 - `src/App.jsx` — タスクの追加・完了切り替え・削除を行うメインコンポーネント
 - `src/App.css` — スタイル（完了済みタスクは `.task.done` でグレー表示）
 
+### デプロイ（GitHub Pages）
+
+- `main` へのプッシュで `.github/workflows/deploy.yml` が実行され、GitHub Pages に自動デプロイされる
+- 公開URL: https://akiwasunshine-cell.github.io/task-board/
+- `vite.config.js` の `base` は `/task-board/`。リポジトリ名を変えた場合はここも合わせて変更する
+
 ## Git 運用ルール
 
 ### 基本方針
